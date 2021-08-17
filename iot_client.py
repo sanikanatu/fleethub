@@ -38,13 +38,13 @@ backOffCore = ProgressiveBackOffCore()
 class IoTThing(AWSIoTMQTTClient):
     def __init__(self):
         self.serial_number = str(uuid.uuid4())
-        self.thing_name = "fh_workshop_" + self.serial_number 
+        self.thing_name = "fh_workshop_" + self.serial_number
         self.iot_endpoint = "{0}-ats.iot.{1}.amazonaws.com".format(
             os.environ.get("IOT_ENDPOINT"),
             os.environ.get("IOT_REGION")
         )
         print("Using endpoint: {0}".format(self.iot_endpoint))
-        super().__init__(self.serial_number)
+        super().__init__("fh_workshop_"+ self.serial_number)
         self.private_key, self.private_key_pem = self.generate_private_key()
         self.certificate_pem = None
         self.csr = self.gen_csr(self.private_key)
@@ -67,7 +67,7 @@ class IoTThing(AWSIoTMQTTClient):
         }
         self.shadow = self.initial_shadow
 
-        print("Initialized new thing with serial: {0}".format(self.serial_number))
+        print("Initialized new thing with serial: {0}".format("fh_workshop_"+self.serial_number))
         self.fp_mqtt_client = None
         self.certificate_ownership_token = None
         self.cert_id = None
