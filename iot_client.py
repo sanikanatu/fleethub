@@ -38,7 +38,7 @@ backOffCore = ProgressiveBackOffCore()
 class IoTThing(AWSIoTMQTTClient):
     def __init__(self):
         self.serial_number = str(uuid.uuid4())
-        self.thing_name = self.serial_number
+        self.thing_name = "fh_workshop_" + self.serial_number 
         self.iot_endpoint = "{0}-ats.iot.{1}.amazonaws.com".format(
             os.environ.get("IOT_ENDPOINT"),
             os.environ.get("IOT_REGION")
@@ -195,7 +195,7 @@ class IoTThing(AWSIoTMQTTClient):
             shadow_topic = "$aws/things/{0}/shadow/name/{1}/update".format(self.thing_name, shadow_name)
         else:
             shadow_topic = "$aws/things/{0}/shadow/update".format(self.thing_name)
-            
+
         if clear_desired:
             new_shadow['state']['desired'] = None
         self.publish(shadow_topic, json.dumps(new_shadow), 0)
