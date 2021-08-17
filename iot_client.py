@@ -134,7 +134,7 @@ class IoTThing(AWSIoTMQTTClient):
         boto_iot_client.register_thing(
             templateBody=json.dumps(prov_template_object),
             parameters={
-                "SerialNumber": self.serial_number,
+                "ThingName": self.thing_name,
                 "AWS::IoT::Certificate::Id": certificate_data['certificateId']
             }
         )
